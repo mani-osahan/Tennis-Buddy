@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <DashboardNavbar />
-      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <div className="absolute h-full top-0   ">
         <div>{children}</div>
       </div>
     </div>
