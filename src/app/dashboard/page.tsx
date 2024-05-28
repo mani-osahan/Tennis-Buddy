@@ -1,20 +1,17 @@
 "use client";
 import "leaflet/dist/leaflet.css";
 import tennisAPI from "@/app/actions/tenniscourt_api";
-import Sidebar from "@/app/ui/dashboard/sidenav"
+import Sidebar from "@/app/ui/dashboard/sidenav";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 
 export default function Page() {
-    return (
-      <div>
-
-        <div className="flex h-screen">
-          <Sidebar/>
-        </div>
-<div className="h-screen z-1 flex items-center justify-center 3xl:container bottom-3/4">
-         <MapContainer
-          style={{ height: "70% ", width: "70%" }}
-          center={[45.344720, -75.69500]}
+  return (
+    <div className="absolute">
+      <Sidebar />
+      <div className="abolsute h-28 border-3 rounded border-green-500">
+        <MapContainer
+          style={{ height: "100%", width: "100%" }}
+          center={[45.34472, -75.695]}
           zoom={12}
           dragging={false}
           zoomControl={false}
@@ -22,6 +19,7 @@ export default function Page() {
           doubleClickZoom={false}
           touchZoom={false}
           boxZoom={false}
+          className="relative"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -30,6 +28,5 @@ export default function Page() {
         </MapContainer>
       </div>
     </div>
-    )
-
-  }
+  );
+}

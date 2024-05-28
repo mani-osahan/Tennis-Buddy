@@ -2,6 +2,7 @@
 import Header from "./ui/main/header";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import Pricing from "./ui/main/pricingcard";
 
 export default function Home() {
   return (
@@ -64,6 +65,11 @@ export default function Home() {
           Try it for free →
         </a>
       </div>
+      </div>
+      <div className="flex text-black h-4/5 p-8 justify-center space-x-14 m-16">
+          <Pricing pricingName="Free Tier"/> 
+          <Pricing pricingName="Premium User"/> 
+          <Pricing pricingName="Club Membership"/> 
       </div>
     </main>
   );
