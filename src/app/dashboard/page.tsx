@@ -2,31 +2,40 @@
 import "leaflet/dist/leaflet.css";
 import tennisAPI from "@/app/actions/tenniscourt_api";
 import Sidebar from "@/app/ui/dashboard/sidenav";
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import DashboardNavbar from "../ui/dashboard/dashboardHeader";
+import TennisMap from "../ui/dashboard/mapComponent";
 
-export default function Page() {
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import { useEffect, useState } from "react";
+import { GeoJSONResponse } from "@/types";
+
+
+const Page:React.FC = () => {
+  const [data, setData] = useState<GeoJSONResponse | null>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const result = await tennisAPI()
+      setData(result)
+    }
+
+    fetchData()
+  }, [])
+
   return (
-    <div className="absolute">
-      <Sidebar />
-      <div className="abolsute h-28 border-3 rounded border-green-500">
-        <MapContainer
-          style={{ height: "100%", width: "100%" }}
-          center={[45.34472, -75.695]}
-          zoom={12}
-          dragging={false}
-          zoomControl={false}
-          scrollWheelZoom={false}
-          doubleClickZoom={false}
-          touchZoom={false}
-          boxZoom={false}
-          className="relative"
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-        </MapContainer>
+    <div className="flex z-0">
+      <div className="flex flex-col z-51 ">
+        <Sidebar />
+      </div>
+      {/* <div className="fixed w-full h-24 z-50 bg-white justify-between items-center">
+        <DashboardNavbar />
+      </div> */}
+
+      <div className="relative w-screen h-screen border-3 rounded border-green-500 z-0">
+        {data ? <TennisMap data={data}/> : <div>Loading</div>}
       </div>
     </div>
   );
 }
+
+export default Page

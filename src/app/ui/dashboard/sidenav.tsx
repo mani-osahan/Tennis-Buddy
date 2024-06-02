@@ -9,23 +9,17 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
     try {
       const router = useRouter();
       await axios.get("/api/users/logout");
-      router.push("/login");
+      router.push("/");
     } catch (error: any) {
       console.log(error.message);
     }
   };
 
   return (
-    <div className="flex flex-box drop-shadow-md rounded-xl h-3/4">
-
-    <div
-      className={`relative top-0 left-0 h-screen bg-gray-800 text-white p-6 transition-transform duration-300 transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
-    >
-      <div >
-      <div className="lg:flex-1">
-          <a className="flex lg:flex-1" href="">
+    <div className="flex flex-box drop-shadow-md rounded-xl border-black ">
+      <div className="relative top-0 left-0 h-screen bg-gray-800 text-white p-6 ">
+        <div className="lg:flex-1 ">
+          <a className="flex lg:flex-1 " href="">
             <svg
               version="1.0"
               xmlns="http://www.w3.org/2000/svg"
@@ -61,39 +55,38 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
                 />
               </g>
             </svg>
-            <h1 className="py-2 px-3 whitespace-nowrap text-md text-white font-medium">
+            <h1 className="flex py-2 px-3 whitespace-nowrap text-md text-white font-medium">
               Tennis Buddy
             </h1>
           </a>
         </div>
-        <div className="flex flex-col space-y-12">
-
-        <div className="flex flex-col space-y-12 " >
-          <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-            Friends
-          </Button>
-          <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-            Ranked
-          </Button>
-          <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-            Leaderboard
-          </Button>
-          <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-            Casual
+        <div className="relative top-12">
+          <div className="flex flex-col space-y-12 ">
+            <div className="flex flex-col space-y-12 ">
+              <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
+                Friends
+              </Button>
+              <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
+                Ranked
+              </Button>
+              <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
+                Leaderboard
+              </Button>
+              <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
+                Casual
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="fixed bottom-0">
+          <Button
+            onSubmit={logout}
+            className="mb-2 h-14 w-48 text-center bg-white hover:text-white hover:bg-red-500 "
+          >
+            Sign Out
           </Button>
         </div>
       </div>
-      </div>
-      <div className="flex flex-row  ">
-        <Button
-          onClick={logout}
-          className="flex mb-2 h-12 w-full justify-center w-full h-12 p-2 items=center bg-white text-black rounded-lg hover:bg-green-400 text-sm font-medium hover:bg-red-400 hover:text-black md:flex-none md:justify-start md:p-2 md:px-3"
-        >
-          Sign Out
-        </Button>
-      </div>
-    </div>
-
     </div>
   );
 }

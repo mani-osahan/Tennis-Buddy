@@ -16,15 +16,15 @@ export default function DashboardNavbar() {
   const logout = async () => {
     try{
       await axios.get('/api/users/logout')
-      router.push('/login')
+      router.push('/')
     }catch(error: any){
       console.log(error.message)
     }
   }
   return (
-    <div className="relative">
-    <header className="ml-12">
-      <nav className="flex flex-row p-4 items-center justify-center mx-auto  ">
+    <div >
+    <header >
+      <nav className="flex flex-row p-4 items-center justify-center mx-auto">
         <div className="">
           <Dropdown>
             <DropdownTrigger>
@@ -38,8 +38,8 @@ export default function DashboardNavbar() {
         <div
           className=""
         >
-          <form className="flex flex-row justify-end">
-          <Button onClick={logout} color="danger" className="flex justify-end items-center hover:text-blac hover:danger">
+          <form className="justify-end">
+          <Button onClick={logout} color="danger" className=" justify-end items-center hover:text-blac hover:danger">
             <div className="md:block">Sign Out</div>
           </Button>
           </form>
