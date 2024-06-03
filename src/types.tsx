@@ -10,8 +10,9 @@ export interface FeatureGeometry {
 }
 
 export interface Feature {
-  attributes: FeatureAttributes;
+  properties: FeatureAttributes;
   geometry: FeatureGeometry;
+
 }
 
 
