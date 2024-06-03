@@ -65,10 +65,6 @@ app.post("/signup", async (req: NextApiRequest, res: NextApiResponse) => {
 })
 export default function DBConnection(){
 
-    
-
-
-
     return(
         <div>
 

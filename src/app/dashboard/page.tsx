@@ -4,8 +4,7 @@ import tennisAPI from "@/app/actions/tenniscourt_api";
 import Sidebar from "@/app/ui/dashboard/sidenav";
 import DashboardNavbar from "../ui/dashboard/dashboardHeader";
 import TennisMap from "../ui/dashboard/mapComponent";
-
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import {  Spinner } from '@nextui-org/react';
 import { useEffect, useState } from "react";
 import { GeoJSONResponse } from "@/types";
 
@@ -32,7 +31,7 @@ const Page:React.FC = () => {
       </div> */}
 
       <div className="relative w-screen h-screen border-3 rounded border-green-500 z-0">
-        {data ? <TennisMap data={data}/> : <div>Loading</div>}
+        {data ? <TennisMap data={data}/> : <Spinner/>}
       </div>
     </div>
   );

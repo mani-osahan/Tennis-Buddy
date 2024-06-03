@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next";
 import { GeoJSONResponse, Feature } from "@/types";
-import { CircleMarker } from "react-leaflet";
 import { MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import { Tooltip } from "@nextui-org/react";
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css";
-import tennisAPI from "@/app/actions/tenniscourt_api";
-
+import MarkerModal from "./modal";
 
 export const getStaticProps: GetStaticProps = async () => {
     const res = await fetch(
@@ -27,7 +26,22 @@ interface MapComponentProps {
 
 const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
 
-  const icon = L.icon({iconUrl: '../src/app/lib/images/marker.png'})
+  const DefaultIcon = L.icon({
+    iconUrl: '/images/marker.png' ,
+    shadowUrl: '/images/marker-shadow.png',
+    iconSize : [28,38],
+    iconAnchor: [20,20]
+  })
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState<Feature >();
+
+  const handleMarkerClick = (feature: Feature) => {
+    setSelectedFeature(feature);
+    setModalVisible(true);
+  };
+
+    L.Marker.prototype.options.icon = DefaultIcon
 
   return (
     <div className="w-screen h-screen">
@@ -41,27 +55,37 @@ const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
+ 
         {data.features.map((feature: Feature, index: number) => (
-          <Marker
+
+         <Marker
           key={index}
           position={[
             feature.geometry.coordinates[1],
             feature.geometry.coordinates[0],
           ]}
-          icon={icon}
+          icon={DefaultIcon}
+          eventHandlers={{
+            mouseover: (event) => event.target.openPopup() ,
+            click: () =>  handleMarkerClick(feature)
+          }}
         >
-          {feature.attributes && (
+          
+          {feature.properties && (
             <Popup>
-              <strong>{feature.attributes.NAME}</strong>
+
+              <strong>{feature.properties.PARKNAME}</strong>
               <br />
-              {feature.attributes.ADDRESS}
+              {feature.properties.ADDRESS}
             </Popup>
           )}
         </Marker>
         ))}
 
       </MapContainer>
+
+        <MarkerModal visible={modalVisible} onClose={() => setModalVisible(false)} feature={selectedFeature}/>
+
     </div>
   );
 };
