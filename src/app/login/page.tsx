@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import axios from "axios";
 import dotenv from "dotenv"
-
+import { Spinner } from "@nextui-org/react";
 export default function LoginPage(){
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
@@ -29,7 +29,7 @@ export default function LoginPage(){
           setLoading(false);
       }
   }
-
+  
 
     return(
 <div className="relative py-16 bg-gradient-to-br from-gray-50 to-white">
@@ -84,9 +84,12 @@ export default function LoginPage(){
                   <Button
                     size="lg"
                     className="bg-black text-white"
-                    onClick={onLogin}
+                    onClick={() => {
+                      onLogin();
+                      setLoading(true);
+                    }}
                   >
-                    Login
+                    {loading ? <Spinner /> : 'Login'}
                   </Button>
                 </div>
               </form>

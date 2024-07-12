@@ -1,3 +1,5 @@
+import { Link } from "@nextui-org/react";
+
 export default function Header() {
   return (
     <header className="b-base-100 mx-auto">
@@ -62,12 +64,11 @@ export default function Header() {
         className="flex-none hidden sm:flex items-center gap-5 justify-end md:flex-1 lg:w-0 lg:justify-end lg:flex-3"
         aria-label=""
       >
-        <a
-          className="whitespace-nowrap text-md text-gray-500 font-medium hover:text-gray-900"
-          href="/login"
-        >
-          Sign in
-        </a>
+        <Link href="/login">
+          <a className="whitespace-nowrap text-md text-gray-500 font-medium hover:text-gray-900">
+            Sign in
+          </a>
+        </Link>
         <a
           className="whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-sm text-white bg-black"
           href="/signup"

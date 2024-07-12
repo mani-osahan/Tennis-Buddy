@@ -16,3 +16,11 @@ export async function connect() {
     console.error(`Error Occurred on connection | ${error}`)
 }
 }
+
+// import { createClient } from '@supabase/supabase-js'
+
+// const supabaseUrl = 'https://rbrpaneihlrpnawntlby.supabase.co'
+// const supabaseKey = process.env.SUPABASE_KEY!
+// const supabase = createClient(supabaseUrl, supabaseKey)
+
+// export default supabase
