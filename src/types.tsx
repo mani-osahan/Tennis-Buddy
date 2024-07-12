@@ -1,6 +1,4 @@
 export interface FeatureAttributes {
-  NAME: string;
-  ADDRESS: string;
   [key: string]: any;
 }
 

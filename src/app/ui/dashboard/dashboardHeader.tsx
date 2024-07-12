@@ -1,8 +1,8 @@
 'use client'
-import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownItem, Button} from "@nextui-org/react";
+import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownItem, Button, Navbar, NavbarBrand} from "@nextui-org/react";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
+import {TennisLogo} from '@/app/lib/images/tennis_logo'
 export default function DashboardNavbar() {
 
   const router = useRouter()
@@ -22,10 +22,11 @@ export default function DashboardNavbar() {
     }
   }
   return (
-    <div >
-    <header >
-      <nav className="flex flex-row p-4 items-center justify-center mx-auto">
-        <div className="">
+      <Navbar className="bg-blue-400 p-4">
+        <NavbarBrand>
+        <TennisLogo/>
+        </NavbarBrand>
+        <div >
           <Dropdown>
             <DropdownTrigger>
               <Button variant="bordered">Notifications</Button>
@@ -44,8 +45,6 @@ export default function DashboardNavbar() {
           </Button>
           </form>
         </div>
-      </nav>
-    </header>
-    </div>
+      </Navbar>
   );
 }
