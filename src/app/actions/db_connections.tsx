@@ -33,22 +33,23 @@ app.use(express.static('public'))
 
 
 const userSchema = new mongoose.Schema({
-    emailAddress: {type: String, unique: true, required: true}, 
+    name: {type: String, required: true},
+    email: {type: String, unique: true, required: true}, 
     password: {type: String, required: true}
 })
     
-const User = mongoose.model('users', userSchema)
+const User = mongoose.model('tb_users', userSchema)
 
-// userSchema.pre('save', async function(next: any){
-//     try{
-//         const salt = await bcrypt.genSalt(10);
-//         const hash = await bcrypt.hash(this.password, salt)
-//         this.password = hash
-//         next()
-//     }catch(error){
-//         next(error)
-//     }
-// })
+userSchema.pre('save', async function(next: any){
+    try{
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(this.password, salt)
+        this.password = hash
+        next()
+    }catch(error){
+        next(error)
+    }
+})
 
 
 app.post("/signup", async (req: NextApiRequest, res: NextApiResponse) => {

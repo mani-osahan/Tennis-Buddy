@@ -1,49 +1,53 @@
 "use client";
-import { useFormState } from "react-dom";
-import { signup } from "@/app/actions/auth";
 import "@/app/ui/globals.css";
 import { Input, Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import React from "react";
-import axios from "axios";
-import dotenv from "dotenv"
+import React, { useEffect } from "react";
 import { Spinner } from "@nextui-org/react";
-export default function LoginPage(){
+import Cookies from "js-cookie";
+import Script from "next/script";
+
+export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState({
-      email: "",
-      password: "",
-  })
+    email: "",
+    password: "",
+  });
+const removeCookies = () => {
+  Cookies.remove("isProfileComplete")
+  Cookies.remove("userId")
+  Cookies.remove("token")
+}
+  const onLogin = async () => {
+    try {
+      setLoading(true);
 
-    const onLogin = async () => {
-      try {
-          setLoading(true);
-          const response = await axios.post("/api/users/login", user);
-          router.push("/dashboard");
-          
-      } catch (error:any) {
-          console.log(`Login Failed: ${error.message}`);
-          
-      }finally {
-          setLoading(false);
-      }
-  }
-  
+      router.push("/dashboard");
+    } catch (error: any) {
+      console.log(`Login Failed: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return(
-<div className="relative py-16 bg-gradient-to-br from-gray-50 to-white">
+  React.useEffect(() => {
+    removeCookies(),
+    router.events.on()
+  }, [])
+
+  return (
+    <div className="relative py-16 bg-gradient-to-br from-gray-50 to-white">
+      <Script src=""/>
       <div className="relative container m-auto px-6 text-gray-500 md:px-12 xl:px-40">
         <div className="m-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
           <div className="rounded-xl bg-white shadow-xl">
             <div className="p-6 sm:p-16">
               <h1 className="mb-4 text-4xl text-green-500 font-bold">
-                <span className="text-black">Login</span> 
+                <span className="text-black">Login</span>
               </h1>
 
               <form className="mt-12 grid space-y-4" method="POST">
-
-
                 <div className="gh-input-group">
                   <Input
                     id="email"
@@ -64,9 +68,7 @@ export default function LoginPage(){
                       <button
                         className="focus:outline-none"
                         type="button"
-                      >
-          
-                      </button>
+                      ></button>
                     }
                     id="password"
                     name="password"
@@ -89,7 +91,7 @@ export default function LoginPage(){
                       setLoading(true);
                     }}
                   >
-                    {loading ? <Spinner /> : 'Login'}
+                    {loading ? <Spinner /> : "Login"}
                   </Button>
                 </div>
               </form>
@@ -162,5 +164,5 @@ export default function LoginPage(){
         </div>
       </div>
     </div>
-    )
+  );
 }

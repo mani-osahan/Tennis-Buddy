@@ -14,16 +14,12 @@ import NotificationDrawer from "../../notification/notificationdrawer";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 
-
-
-
 interface NavbarWrapperProps {
   className?: string;
   handleOpen: () => void;
 }
 
-
-const NavbarWrapper: React.FC<NavbarWrapperProps> =  ({ className }) => {
+const NavbarWrapper: React.FC<NavbarWrapperProps> = ({ className }) => {
   return (
     <nav className={className}>
       <Navbar
@@ -72,7 +68,18 @@ const NavbarWrapper: React.FC<NavbarWrapperProps> =  ({ className }) => {
               </DropdownTrigger>
 
               <DropdownMenu>
-                <DropdownItem></DropdownItem>
+                <DropdownItem>XP under profile</DropdownItem>
+                <DropdownItem>Player Level under profile</DropdownItem>
+                <DropdownItem className="" href="/profile">Show Profile</DropdownItem>
+                <DropdownItem>Preferences</DropdownItem>
+                <DropdownItem>Settings</DropdownItem>
+                <DropdownItem
+                  variant="flat"
+                  className="text-danger"
+                  color="danger"
+                >
+                  Sign Out
+                </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>

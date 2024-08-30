@@ -1,28 +1,46 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest){
-    const path = request.nextUrl.pathname
+export function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
 
-    const isPublicPath =  path === '/login' || path === '/signup' || path === '/verifyemail' || path === '/dashboard' 
+  const token = request.cookies.get("token")?.value || "";
+  const userId = request.cookies.get("userId")?.value || "";
+  // const userComplete = user.isProfileComplete
+  const isProfileComplete =
+    request.cookies.get("isProfileComplete")?.value === "true";
 
-    const token = request.cookies.get('token')?.value || ''
+  const isPublicPath =
+    path === "/login" || path === "/verifyemail" || path === "/dashboard";
 
-    if(isPublicPath && token){
-        return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
-    }
+  const isProfileSetupPath = path.startsWith(`/profile-setup/${userId}`);
 
-    if (!isPublicPath && !token){
-        return NextResponse.redirect(new URL('/login', request.nextUrl))
-    }
+  // if (path === "/login") {
+  //   const response = NextResponse.next();
+  //   response.cookies.delete("isProfileComplete");
+  //   response.cookies.delete("userId");
+  //   response.cookies.delete("token");
 
+  //   return response;
+  // }
+
+  if (token && !isProfileComplete && !isProfileSetupPath) {
+    return NextResponse.redirect(
+      new URL(`/profile-setup/${userId}`, request.nextUrl)
+    );
+  }
+
+  if (token && isProfileComplete && path === `/profile-setup/${userId}`) {
+    return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
+  }
+
+  if (!token && !isPublicPath) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-    matcher: [
-        '/profile',
-        '/login',
-        '/signup',
-        '/verifyemail'
-    ]
-}
+  matcher: ["/profile-setup/:id*", "/login", "/verifyemail", "/dashboard"],
+};

@@ -1,33 +1,69 @@
-import mongoose from "mongoose"
+import { image } from "@nextui-org/theme";
+import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required:[true, "Please provide a name"]
+      type: String,
+      required: [true, "Please provide a name"],
     },
     email: {
-        type: String, 
-        unique: true, 
-        required: [true, "Please provide an email address"]
-    }, 
+      type: String,
+      unique: true,
+      required: [true, "Please provide an email address"],
+    },
     password: {
-        type: String, 
-        required: [true, "Please provide a password"]
+      type: String,
+      required: [true, "Please provide a password"],
     },
     isVerified: {
-        type: Boolean, 
-        default: false
+      type: Boolean,
+      default: false,
     },
     isAdmin: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
-    forgotPasswordToken: String, 
+    isProfileComplete: {
+      type: Boolean,
+      default: false,
+    },
+
+    forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
-    verifyTokenExpiry: Date
-})
+    verifyTokenExpiry: Date,
 
-const User = mongoose.models.user || mongoose.model("user", userSchema)
+    utrRating: {
+      type: [],
+      default: [],
+    },
+    experience: {
+      type: String,
+      default: "",
+    },
+    playStyle: {
+      type: String,
+      default: "",
+    },
+    courtSurface: {
+      type: [String],
+      default: [],
+    },
+    availability: {
+      type: [String],
+      default: [],
+    },
+    dateOfBirth: {
+      type: Date,
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export default User
+const User = mongoose.models.tb_users || mongoose.model("tb_users", userSchema);
+
+export default User;
