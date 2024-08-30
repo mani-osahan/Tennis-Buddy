@@ -2,18 +2,18 @@
 import "leaflet/dist/leaflet.css";
 import tennisAPI from "@/app/actions/tenniscourt_api";
 import Sidebar from "@/app/ui/dashboard/sidebar/sidenav";
-import DashboardNavbar from "../ui/dashboard/dashboardHeader";
-import TennisMap from "../ui/dashboard/main/mapComponent";
+import DashboardNavbar from "../../ui/dashboard/dashboardHeader";
+import TennisMap from "../../ui/dashboard/main/mapComponent";
 import { Spinner } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { GeoJSONResponse } from "@/types";
-import { NavbarWrapper } from "../ui/dashboard/navbar/navbar";
+import { NavbarWrapper } from "../../ui/dashboard/navbar/navbar";
 import Menu from "@/app/ui/dashboard/menu/menu";
 
 const Page: React.FC = () => {
   return (
       <div>
-        <h1>test</h1>
+        <TennisComponent/>
       </div>
   );
 };

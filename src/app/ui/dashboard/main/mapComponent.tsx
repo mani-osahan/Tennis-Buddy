@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { GetStaticProps } from "next";
 import { GeoJSONResponse, Feature } from "@/types";
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import MarkerModal from "./modal/modal";
+import MarkerModal from "../modal/modal";
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
@@ -32,6 +32,11 @@ const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
     iconAnchor: [20, 20],
   });
 
+  const outerBounds = [
+    [50, 20],
+    [50, 20]
+  ]
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
 
@@ -48,7 +53,8 @@ const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
         style={{ height: "100%", width: "100%" }}
         center={[45.34472, -75.695]}
         zoom={12}
-        
+        minZoom={11}
+        bounds={outerBounds}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

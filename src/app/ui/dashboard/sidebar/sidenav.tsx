@@ -41,18 +41,19 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
         })}
       >
         <div className={Sidebar.Header()} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ marginRight: '8px' }}>
+          <div className="relative">
             <TennisLogo />
           </div>
-          <h1 className="py-2 whitespace-normal text-md text-white font-medium">
+          <h3 className="relative whitespace-normal text-md text-white text-nowrap font-thin">
             Tennis Buddy
-          </h1>
+          </h3>
         </div>
 
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>
             <SidebarMenu title="Main">
-              <SidebarItem title="Play" icon="" isActive={pathname === "/"} />
+              <SidebarItem title="Overview" icon="" isActive={pathname === "/"} href="/dashboard/overview" />
+              <SidebarItem title="Play" icon="" isActive={pathname === "/"} href="" />
 
               <SidebarItem title="Tournaments" icon="" isActive={pathname === "/"} />
 
@@ -60,8 +61,10 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
                 title="Leaderboard"
                 icon=""
                 isActive={pathname === "/"}
+                href='/dashboard/leaderboard/'
               />
             </SidebarMenu>
+            
             <SidebarMenu title="Social">
               <SidebarItem
                 title="Friends"

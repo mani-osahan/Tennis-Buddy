@@ -20,10 +20,16 @@ export default function SignupForm() {
 
   const onSignup = async () => {
     try {
+      console.log("USERRR", user);
       const response = await axios.post("/api/users/signup", user);
-      router.push("/login");
+      if (response.data.success) {
+        console.log("SUCCESS", response);
+        router.push(response.data.redirectTo);
+      } else {
+        console.error("Signup Failed:", response.data.error);
+      }
     } catch (error: any) {
-      console.log(`Signup Failed: ${error}`);
+      console.log(`Signup External Failed: ${error}`);
     }
   };
   const toggleVisibility = () => setIsVisible(!isVisible);

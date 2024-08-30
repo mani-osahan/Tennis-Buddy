@@ -13,17 +13,12 @@ import {
   Tabs,
   Select,
   SelectItem,
-  // Table,
-  // TableHeader,
-  // TableBody,
-  // TableColumn,
-  // TableRow,
-  // TableCell,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
 } from "@nextui-org/react";
 import { Tag, TagLabel, TagCloseButton, Box } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -32,15 +27,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { utrOptions } from "./utrRating";
-import {
-  Table,
-  Header,
-  HeaderRow,
-  Body,
-  Row,
-  HeaderCell,
-  Cell,
-} from "@table-library/react-table-library/table";
+
 
 interface FeatureModalProps {
   visible: boolean;
@@ -63,62 +50,6 @@ const MarkerModal: React.FC<FeatureModalProps> = ({
   if (!feature) return null;
   console.log(feature);
 
-  const handleTimeChange = (time: string) => {
-    console.log("Selected time:", time);
-  };
-  const days = [
-    "Time",
-    "Saturday",
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-  ];
-
-  const hours = Array.from(
-    { length: 12 },
-    (_, i) =>
-      `${i === 0 ? 12 : i.toString().padStart(2, "0")}:00 ${
-        i < 12 ? "AM" : "PM"
-      }`
-  );
-
-  const [selectDay, setSelectedDay] = useState<string[]>([]);
-
-  const handleTagClick = (day: string) => {
-    setSelectedDay((prevSelectDay) =>
-      prevSelectDay.includes(day)
-        ? prevSelectDay.filter((d) => d !== day)
-        : [...prevSelectDay, day]
-    );
-  };
-
-  const changeTag = (day: string) => (
-    <Tag
-      size="lg"
-      borderRadius="full"
-      variant="solid"
-      colorScheme="green"
-      whiteSpace="nowrap"
-    >
-      <TagLabel>{selectDay}</TagLabel>
-      <TagCloseButton />
-    </Tag>
-  );
-
-  const handleTagClose = (day: string) => (
-    <Tag
-      size="lg"
-      borderRadius="full"
-      variant="outline"
-      colorScheme="green"
-      whiteSpace="nowrap"
-    >
-      <TagLabel>{day}</TagLabel>
-    </Tag>
-  );
 
   return (
     <ChakraProvider>
@@ -233,6 +164,30 @@ const MarkerModal: React.FC<FeatureModalProps> = ({
                           </Button>
                         </div>
                       </div>
+                    </CardBody>
+                  </Card>
+                </Tab>
+                <Tab key="tournaments" title="Tournaments">
+                  <Card>
+                    <CardBody>
+                          <Tabs aria-label="Options" color="primary" variant="underlined">
+                            <Tab key="active_tournaments" title="Active Tournaments">
+                                <Table>
+                                  <TableHeader>
+                                    <TableColumn>Test</TableColumn>
+                                  </TableHeader>
+                                  <TableBody>
+                                    <TableRow key='1'>
+                                      <TableCell>Test1</TableCell>
+                                    </TableRow>
+                                  </TableBody>
+                                </Table>
+                            </Tab>
+                            <Tab key="upcoming_tournaments" title="Upcoming Tournaments">
+
+                            </Tab>
+                          </Tabs>
+
                     </CardBody>
                   </Card>
                 </Tab>
