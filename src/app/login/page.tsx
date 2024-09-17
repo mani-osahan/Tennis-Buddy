@@ -32,9 +32,8 @@ const removeCookies = () => {
   };
 
   React.useEffect(() => {
-    removeCookies(),
-    router.events.on()
-  }, [])
+    removeCookies();
+  }, []);
 
   return (
     <div className="relative py-16 bg-gradient-to-br from-gray-50 to-white">
