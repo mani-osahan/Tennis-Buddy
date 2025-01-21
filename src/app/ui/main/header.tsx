@@ -37,7 +37,7 @@ export default function Header() {
             </a>
           <a
             className="whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-sm text-white bg-black"
-            href="/signup"
+            href="/sign-up"
           >
             <strong className="font-semibold">Get Started-free</strong>
           </a>

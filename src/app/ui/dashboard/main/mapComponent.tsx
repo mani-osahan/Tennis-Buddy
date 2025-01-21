@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next";
 import { GeoJSONResponse, Feature } from "@/types";
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
@@ -51,7 +51,7 @@ const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
     <div className="w-screen h-screen max-w-screen-2xl max-h-[85vh] size-fit border-8 rounded-lg border-white">
       <MapContainer
         style={{ height: "100%", width: "100%" }}
-        center={[45.34472, -75.695]}
+        center={[45,-75]}
         zoom={12}
         minZoom={11}
         bounds={outerBounds}

@@ -22,6 +22,15 @@ const config: Config = {
         '4': '24px',
         '5': '32px',
         '6': '48px',
+      },
+      colors: {
+        'primary': '#0B6E4F',
+        'secondary': '#0F9D58',
+        'tertiary': '#34A853',
+        'text': '#2D3436',
+        'subtext': '#636E72',
+        'background': '#DFE6E9',
+        'white': '#FFFFFF',
       }
     },
   },

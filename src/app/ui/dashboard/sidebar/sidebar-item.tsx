@@ -86,42 +86,24 @@ function SidebarMenu(sidebarList: Array<string>) {
 }
 
 export const SidebarItem = ({ icon, title, isActive, href = "" }: Props) => {
-  const { collapsed, setCollapsed } = useSidebarContext();
-
-  const handleClick = () => {
-    if (window.innerWidth < 768) {
-      setCollapsed();
-    }
-  };
-
   return (
     <NextLink
       href={href}
-      className="text-default-900 active:bg-none max-w-full"
+      className="active:bg-none max-w-full"
       style={{ textDecoration: "none" }}
       shallow={true}
     >
       <div
         className={clsx(
           isActive
-            ? "bg-primary-100 [&_svg_path]:fill-primary-500 "
-            : "hover:bg-green-500 ",
-          "flex gap-2 w-full min-h-[44px] h-full items-center px-3.5 rounded-xl cursor-pointer transition-all duration-150 active:scale-[0.98]"
+            ? "bg-primary [&_svg_path]:fill-primary "
+            : "hover:bg-tertiary",
+          "flex m-0.75 w-full min-h-[40px] items-center px-3.5 rounded-md cursor-pointer transition-all duration-100 active:scale-[0.95]"
         )}
-        onClick={handleClick}
       >
-        {icon}
-        <span
-          className="text-white"
-          onClick={() => {
-            switch (title) {
-              case "host Event":
-                return <hostEvent />;
-            }
-          }}
-        >
-          {title}
-        </span>
+        <div className="mr-3">{icon}
+          </div>
+        <span className="text-white font-normal">{title}</span>
       </div>
     </NextLink>
   );

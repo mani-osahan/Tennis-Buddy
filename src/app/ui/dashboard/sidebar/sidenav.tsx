@@ -1,37 +1,32 @@
 "use client";
-import Link from "next/link";
-import axios from "axios";
+import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Button, Avatar, User, Spinner } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { TennisLogo } from "@/app/lib/images/tennis_logo";
-import { SidebarContext, useSidebarContext } from "../../layout/layout-context";
+import { useSidebarContext } from "../../layout/layout-context";
 import { Sidebar } from "./sidebar.styles";
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
 import { Tooltip } from "@nextui-org/react";
 import { SettingIcon } from "@/app/lib/images/settings_icon";
-import React from "react";
-
-export default function SideBar(isOpen: any, toggleSidebar: any) {
+import { supabase } from "@/app/lib/supabase/client";
+import FriendsIcon from "@/app/lib/images/friendsIcon";
+import AddFriendsIcon from "@/app/lib/images/addFriendsIcon";
+import ChatIcon from "@/app/lib/images/chatIcon";
+export default function SideBar() {
   const router = useRouter();
- 
+
   const logout = async () => {
-    try {
-      await axios.get("/api/users/logout");
-      router.push("/");
-    } catch (error: any) {
-      console.log(error.message);
-    }
+    await supabase.auth.signOut();
+    router.push("/");
   };
-  const handleLogout = () => {
-    console.log("Logging Out..")
-    logout()
-  }
+
   const [loading, setLoading] = React.useState(false);
   const { collapsed, setCollapsed } = useSidebarContext();
   const pathname = usePathname();
+
   return (
-    <aside className="h-screen z-[20] sticky top-0">
+    <aside className="h-screen z-[40] sticky top-0">
       {collapsed ? (
         <div className={Sidebar.Overlay()} onClick={setCollapsed}></div>
       ) : null}
@@ -40,7 +35,14 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
           collapsed: collapsed,
         })}
       >
-        <div className={Sidebar.Header()} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div
+          className={Sidebar.Header()}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <div className="relative">
             <TennisLogo />
           </div>
@@ -52,33 +54,52 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
         <div className="flex flex-col justify-between h-full">
           <div className={Sidebar.Body()}>
             <SidebarMenu title="Main">
-              <SidebarItem title="Overview" icon="" isActive={pathname === "/"} href="/dashboard/overview" />
-              <SidebarItem title="Play" icon="" isActive={pathname === "/"} href="" />
+              <SidebarItem
+                title="Overview"
+                icon=""
+                isActive={pathname === "/"}
+                href=""
+              />
+              <SidebarItem
+                title="Play"
+                icon=""
+                isActive={pathname === "/"}
+                href=""
+              />
 
-              <SidebarItem title="Tournaments" icon="" isActive={pathname === "/"} />
+              <SidebarItem
+                title="Tournaments"
+                icon=""
+                isActive={pathname === "/"}
+              />
 
               <SidebarItem
                 title="Leaderboard"
                 icon=""
                 isActive={pathname === "/"}
-                href='/dashboard/leaderboard/'
+                href="/dashboard/leaderboard/"
               />
             </SidebarMenu>
-            
+
             <SidebarMenu title="Social">
               <SidebarItem
                 title="Friends"
-                icon=""
+                icon={<FriendsIcon/>}
                 isActive={pathname === "/"}
               />
               <SidebarItem
                 title="Add Friends"
-                icon=""
+                icon={<AddFriendsIcon/>}
+                isActive={pathname === "/"}
+              />
+              <SidebarItem
+                title="Chat"
+                icon={<ChatIcon/>}
                 isActive={pathname === "/"}
               />
             </SidebarMenu>
             <SidebarMenu title="Hosting">
-            <SidebarItem
+              <SidebarItem
                 title="Host Event"
                 icon=""
                 isActive={pathname === "/"}
@@ -87,9 +108,8 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
                 title="Host Tournament"
                 icon=""
                 isActive={pathname === "/"}
-              />           
-          </SidebarMenu>
-          
+              />
+            </SidebarMenu>
           </div>
           <div className={Sidebar.Footer()}>
             <Tooltip content={"Settings"} color="primary">
@@ -98,62 +118,22 @@ export default function SideBar(isOpen: any, toggleSidebar: any) {
               </div>
             </Tooltip>
             <div className="max-w-fit">
-              <Button
-                className=" hover:bg-rose-500 hover:text-white"
+              <button
+                className=" hover:bg-rose-500 
+                hover:text-white hover:border-rose-500
+                text-white border-2 rounded-md p-2 
+                transition duration-200 ease-in-out"
                 onClick={() => {
                   setLoading(true);
-                  handleLogout();
+                  logout();
                 }}
               >
-              {loading ? <Spinner /> : 'Sign Out'}
- 
-              </Button>
+                {loading ? <Spinner /> : "Sign Out"}
+              </button>
             </div>
-            {/* <Menu open={true} setOpen={function (open: boolean): void {
-              throw new Error("Function not implemented.");
-            } }/> */}
-            <></>
           </div>
         </div>
       </div>
     </aside>
-    // <div className="flex flex-box drop-shadow-md rounded-xl border-black ">
-    //   <div className="relative top-0 left-0 h-screen bg-gray-800 text-white p-6 ">
-    //     <div className="lg:flex-1 ">
-    //       <a className="flex lg:flex-1 " href="">
-    //         <TennisLogo/>
-    //         <h1 className="flex py-2 px-3 whitespace-nowrap text-md text-white font-medium">
-    //           Tennis Buddy
-    //         </h1>
-    //       </a>
-    //     </div>
-    //     <div className="relative top-12">
-    //       <div className="flex flex-col space-y-12 ">
-    //         <div className="flex flex-col space-y-12 ">
-    //           <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-    //             Friends
-    //           </Button>
-    //           <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-    //             Ranked
-    //           </Button>
-    //           <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-    //             Leaderboard
-    //           </Button>
-    //           <Button className="mb-2 h-12 w-full p-2 bg-white text-black rounded-lg hover:bg-green-400">
-    //             Casual
-    //           </Button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="fixed bottom-0">
-    //       <Button
-    //         onSubmit={logout}
-    //         className="mb-2 h-14 w-48 text-center bg-white hover:text-white hover:bg-red-500 "
-    //       >
-    //         Sign Out
-    //       </Button>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }

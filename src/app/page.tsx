@@ -1,7 +1,6 @@
 "use client";
 import Header from "./ui/main/header";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer } from "react-leaflet";
 import Pricing from "./ui/main/pricingcard";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";

@@ -4,13 +4,13 @@ export const TennisLogo = ({}) => (
     <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    height="55px"
+    height="50px"
     viewBox="0 0 350 290"
-    className="text-white fill-current"
+    className="text-white"
     preserveAspectRatio="xMidYMid meet"
   >
     <g
-      transform="translate(0.000000,280.000000) scale(0.0500000,-0.050000)"
+      transform="translate(0.000000,285.000000) scale(0.0500000,-0.050000)"
       fill="#FFfFFF"
       stroke="none"
     >

@@ -12,7 +12,6 @@ import {
 } from "@nextui-org/react";
 import NotificationDrawer from "../../notification/notificationdrawer";
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
 
 interface NavbarWrapperProps {
   className?: string;
