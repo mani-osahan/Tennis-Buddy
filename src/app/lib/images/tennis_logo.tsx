@@ -1,21 +1,20 @@
 export const TennisLogo = ({}) => (
-    <div>
-
+  <div>
     <svg
-    version="1.0"
-    xmlns="http://www.w3.org/2000/svg"
-    height="50px"
-    viewBox="0 0 350 290"
-    className="text-white"
-    preserveAspectRatio="xMidYMid meet"
-  >
-    <g
-      transform="translate(0.000000,285.000000) scale(0.0500000,-0.050000)"
-      fill="#FFfFFF"
-      stroke="none"
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+      height="50px"
+      viewBox="0 0 350 290"
+      className="text-white"
+      preserveAspectRatio="xMidYMid meet"
     >
-      <path
-        d="M3000 4984 c-452 -52 -749 -153 -1090 -372 -504 -324 -880 -893 -980
+      <g
+        transform="translate(0.000000,285.000000) scale(0.0500000,-0.050000)"
+        fill="#FFfFFF"
+        stroke="none"
+      >
+        <path
+          d="M3000 4984 c-452 -52 -749 -153 -1090 -372 -504 -324 -880 -893 -980
 -1482 -22 -128 -31 -463 -16 -614 71 -730 546 -1412 1217 -1750 163 -82 315
 -139 404 -151 24 -4 48 -8 51 -11 15 -9 161 -36 269 -50 138 -17 397 -19 535
 -4 143 16 416 74 521 110 431 150 840 474 1100 870 130 199 229 416 289 637
@@ -33,11 +32,8 @@ export const TennisLogo = ({}) => (
 -383 32 -786 -428 -1478 -1171 -1765 -161 -62 -385 -114 -493 -115 l-33 0 44
 58 c118 152 197 304 307 582 242 615 360 853 542 1092 196 258 384 418 630
 539 56 27 104 49 108 49 3 0 12 -26 19 -57z"
-      />
-    </g>
-  </svg>
-
+        />
+      </g>
+    </svg>
   </div>
-  
-)
-
+);
