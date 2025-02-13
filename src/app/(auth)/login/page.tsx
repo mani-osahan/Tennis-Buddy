@@ -2,52 +2,31 @@
 import "@/app/ui/globals.css";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-// import {Spinner} from "tamagui";
 import Script from "next/script";
 import Input from "@/app/ui/signup/input";
 import { supabase } from "../../lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
-  // const supabase = createClientComponentClient();
   const [loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState({
     email: "",
     password: "",
   });
 
-  // useEffect(() => {
-  //   console.log("Component mounted", new Date().toISOString());
-
-  //   const checkSession = async () => {
-  //     const { data } = await supabase.auth.getSession();
-  //     console.log("Session found", new Date().toISOString());
-  //   };
-
-  //   checkSession();
-  // }, []);
-
   const onLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setLoading(true);
     try {
-      e.preventDefault();
-
-      setLoading(true);
-
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data: dataUser, error } = await supabase.auth.signInWithPassword({
         email: user.email,
         password: user.password,
       });
 
-      const { data: session } = await supabase.auth.getSession();
-
       if (error) throw error;
 
-      if (data.user) {
-        if (!session){
-          console.log("User authenticated but no session created")
-        } 
-        await router.push("/dashboard");
-      }
+      if (dataUser && dataUser.user.email_confirmed_at) await router.push("/dashboard");
     } catch (e: any) {
       console.log(e.message);
     } finally {
@@ -94,9 +73,11 @@ export default function LoginPage() {
                 </div>
 
                 <div className="max-w-md w-full space-y-4">
-                  <button className="w-full bg-black text-white hover:bg-gray-800 font-bold py-2 px-4 rounded">
-                    Login
-                    {/* {loading ? <Spinner /> : "Login"} */}
+                  <button
+                    disabled={loading}
+                    className="w-full bg-black text-white hover:bg-gray-800 font-bold py-2 px-4 rounded"
+                  >
+                    {loading ? "Logging in..." : "Login"}
                   </button>
                 </div>
               </form>

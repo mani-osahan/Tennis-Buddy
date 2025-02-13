@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next";
-import { GeoJSONResponse, Feature } from "@/types";
 import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import MarkerModal from "../modal/modal";
+import { GeoJSONResponse } from "@/app/actions/tenniscourt_api";
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
@@ -34,8 +34,8 @@ const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
 
   const outerBounds = [
     [50, 20],
-    [50, 20]
-  ]
+    [50, 20],
+  ];
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null);
@@ -51,7 +51,7 @@ const TennisMap: React.FC<MapComponentProps> = ({ data }) => {
     <div className="w-screen h-screen max-w-screen-2xl max-h-[85vh] size-fit border-8 rounded-lg border-white">
       <MapContainer
         style={{ height: "100%", width: "100%" }}
-        center={[45,-75]}
+        center={[45, -75]}
         zoom={12}
         minZoom={11}
         bounds={outerBounds}

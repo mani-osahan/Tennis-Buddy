@@ -6,10 +6,11 @@ export default function Input(props: {
   placeholder: string;
   onChange: any;
   onClick?: any;
+  className?: string;
 }) {
   return (
     <div className="max-w-md w-full">
-      <div className=" rounded-lg overflow-hidden">
+      <div className=" rounded-lg overflow-hidden `${props.className}`">
         <input
           type={props.type}
           name={props.name}
@@ -17,7 +18,7 @@ export default function Input(props: {
           required={props.required}
           placeholder={props.placeholder}
           onChange={props.onChange}
-          className="w-full p-2 text-black text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          className="w-full p-2 text-text text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
     </div>

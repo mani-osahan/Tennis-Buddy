@@ -1,9 +1,9 @@
 import { TileLayer, Popup, Marker } from "react-leaflet"; // Added Marker import
-import { useMemo } from "react"
-import { MapContainer } from "react-leaflet"
-import { Feature } from "@/types";
+import { useMemo } from "react";
+import { MapContainer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { Feature } from "@/app/actions/tenniscourt_api";
 
 interface FeatureModalProps {
   visible: boolean;
@@ -18,9 +18,6 @@ const DefaultIcon = L.icon({
   iconAnchor: [20, 20],
 });
 
-
-
-
 const MapComponent: React.FC<FeatureModalProps> = ({
   visible,
   onClose,
@@ -29,42 +26,41 @@ const MapComponent: React.FC<FeatureModalProps> = ({
   if (!feature) return null;
   console.log(feature);
 
+  return (
+    <div className="flex flex-box w-auto h-40">
+      <MapContainer
+        style={{ height: "100%", width: "100%" }}
+        center={[
+          feature.geometry.coordinates[1],
+          feature.geometry.coordinates[0],
+        ]}
+        zoom={15}
+        zoomControl={false}
+        scrollWheelZoom={false}
+        doubleClickZoom={false}
+        touchZoom={false}
+        boxZoom={false}
+        dragging={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-    return(
-        <div className="flex flex-box w-auto h-40">
-        <MapContainer
-          style={{ height: "100%", width: "100%" }}
-          center={[
+        <Marker
+          position={[
             feature.geometry.coordinates[1],
             feature.geometry.coordinates[0],
           ]}
-          zoom={15}
-          zoomControl={false}
-          scrollWheelZoom={false}
-          doubleClickZoom={false}
-          touchZoom={false}
-          boxZoom={false}
-          dragging={false}
+          icon={DefaultIcon}
         >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+          <Popup>
+            <strong></strong>
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
+  );
+};
 
-          <Marker
-            position={[
-              feature.geometry.coordinates[1],
-              feature.geometry.coordinates[0],
-            ]}
-            icon={DefaultIcon}
-          >
-            <Popup>
-              <strong></strong>
-            </Popup>
-          </Marker>
-        </MapContainer>
-      </div>
-    )
-}
-
-export default MapComponent
+export default MapComponent;

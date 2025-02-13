@@ -1,4 +1,4 @@
-export const TennisLogo = ({}) => (
+export const TennisLogo = () => (
   <div>
     <svg
       version="1.0"

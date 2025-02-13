@@ -1,5 +1,4 @@
 "use client";
-import { useFormState } from "react-dom";
 import "@/app/ui/globals.css";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -30,7 +29,7 @@ export default function SignupForm() {
           <h2 className="text-center text-2xl font-bold leading-tight text-black">
             Verify Your Email Address
           </h2>
-        </div>  
+        </div>
       </div>
     );
   };
@@ -49,7 +48,7 @@ export default function SignupForm() {
     }
     if (!user.password) {
       errors.password = "Password is required";
-    } else if (user.password.length < 8 ) {
+    } else if (user.password.length < 8) {
       errors.password = "Password must be at least 8 characters";
     }
     setErrors(errors);
@@ -60,12 +59,27 @@ export default function SignupForm() {
     setIsSubmitted(true);
 
     if (validateForm()) {
-      VerifyEmail();
-      await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: user.email,
         password: user.password,
+        options: {
+          data: {
+            full_name: user.name,
+          },
+        },
       });
 
+      if (error) throw error;
+
+      if (
+        data.user &&
+        data.user.identities &&
+        data.user.identities.length === 0
+      ) {
+        throw new Error("Email already registered");
+      }
+
+      await router.push("/profile-setup");
     } else {
       {
         isSubmitted && errors.name && (

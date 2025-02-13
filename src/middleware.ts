@@ -1,7 +1,6 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { error } from 'console';
 import { NextRequest, NextResponse } from "next/server";
-export default async function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
 
     const supabase = createMiddlewareClient({
@@ -9,32 +8,45 @@ export default async function middleware(req: NextRequest) {
         res,
     });
 
+ 
     try{
-
-
-    const {data: {session}} = await supabase.auth.getSession();
-
-    console.log("URL", req.nextUrl.pathname);
-    console.log('Session Status: ', session ? 'valid' : 'null');
-
-    if (error){
-        console.error("Session error: ", error)
-    }
-
-    if (req.nextUrl.pathname.startsWith('/dashboard')) {
-        if (!session)
-            return NextResponse.redirect(new URL('/login', req.url));
-    }
+        const {data: {session}} = await supabase.auth.getSession();
+        const {data: userProfile} = await supabase
+            .from('profiles').select().eq('user_id', session?.user.id).single()
+        // if (!session) return NextResponse.rewrite(new URL('/login', req.url));
     
-    if (req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith
-    ('/signup')) {
-        console.log("Session", session)
-        if (session)
-            return NextResponse.redirect(new URL('/dashboard', req.url));
-    }
+        // console.log(session)
+        if (req.nextUrl.pathname === '/') return res;
 
-    }catch(error: any){
-        console.log(error.message)
+
+        if (req.nextUrl.pathname.startsWith('/dashboard')) {
+            if (!session)
+                return NextResponse.rewrite(new URL('/login', req.url));
+        }
+        
+        if (req.nextUrl.pathname.startsWith('/login') ) {
+            if (!session) return res;
+            
+            if (userProfile?.username === null) {
+                return NextResponse.redirect(new URL('/profile-setup', req.url))
+            }
+            return NextResponse.redirect(new URL('/dashboard', req.url))
+        }
+
+        if (req.nextUrl.pathname.startsWith('/sign-up')){
+
+            if (session) return NextResponse.redirect(new URL('/profile-setup', req.url));
+        }
+
+        if (req.nextUrl.pathname.startsWith('/sign-out')){
+            return NextResponse.rewrite(new URL('/login', req.url));
+        }
+
+
+        
+        return res
+
+    }catch (error) {
         return res
     }
 }

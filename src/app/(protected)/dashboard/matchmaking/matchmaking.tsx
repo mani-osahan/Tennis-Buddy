@@ -1,15 +1,9 @@
-import express from 'express'
-import { createServer } from 'http'
-import {Server} from 'socket.io'
+"use client";
+import { supabase } from "@/app/lib/supabase/client";
+import { useEffect, useState } from "react";
 
-const app = express()
-const httpServer = createServer(app)
-const io = new Server(httpServer,{
+export default function Matchmaking() {
+  const [data, setData] = useState(null);
 
-})
-
-io.on("connection", (socket) => {
-
-})
-
-httpServer.listen(3001)
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+}
